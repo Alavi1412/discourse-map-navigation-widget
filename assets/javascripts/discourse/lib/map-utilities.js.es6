@@ -92,7 +92,6 @@ let generateMap = function(category) {
 }
 
 let setupMap = function(category, map, geojson, showAttribution) {
-
   if (showAttribution) {
     map.addControl(attributionControl)
   } else {
@@ -109,11 +108,7 @@ let setupMap = function(category, map, geojson, showAttribution) {
       if (layer.feature.slug === slug) {
         let style = mapStyle(layer.feature, true)
         layer.setStyle(style)
-        if (category.custom_zoom) {
-          map.setView([category.custom_lat, category.custom_lng], category.custom_zoom)
-        } else {
-          map.fitBounds(layer.getBounds())
-        }
+        map.fitBounds(layer.getBounds())
       } else if (layer.feature.slug === parentSlug) {
         layer.setStyle({
           fillOpacity: 0
