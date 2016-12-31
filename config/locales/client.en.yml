@@ -1,0 +1,8 @@
+en:
+  js:
+    category:
+      has_geojson: "Category has geojson"
+      geojson: "Geojson file"
+
+    user:
+      home_category: "Home"
