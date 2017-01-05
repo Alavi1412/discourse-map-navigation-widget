@@ -1,5 +1,5 @@
 # name: discourse-map-navigation-widget
-# about: A widget that provides map-based navigation for Discourse categories. Requires discourse-sidebar-widgets.
+# about: A widget that provides map-based navigation for Discourse categories. Requires discourse-layouts.
 # version: 0.1
 # authors: Angus McLeod
 
@@ -19,6 +19,6 @@ after_initialize do
   add_to_serializer(:current_user, :home_category) {object.custom_fields["home_category"]}
 
   SiteSetting.class_eval do
-    @choices[:sidebar_right_widgets].push('navigation')
+    @choices[:layouts_sidebar_right_widgets].push('navigation')
   end
 end

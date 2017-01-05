@@ -5,7 +5,7 @@ export default {
   initialize(){
 
     // changes the location navigated to when the site logo is clicked
-    if (Discourse.SiteSettings.widget_map_logo_url_override) {
+    if (Discourse.SiteSettings.widget_map_logo_home_url) {
       withPluginApi('0.1', api => {
         const user = api.getCurrentUser()
         if (!user) {return}

@@ -1,4 +1,4 @@
 plugins:
-  widget_map_logo_url_override:
+  widget_map_logo_home_url:
     client: true
     default: false

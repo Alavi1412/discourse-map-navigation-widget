@@ -1,5 +1,3 @@
-const attributionControl = L.control.attribution({ position: 'bottomright' })
-
 let mapStyle = function(feature, highlight) {
   return {
     fillColor: feature.parent ? "#ff7800" : "#0088cc",
@@ -88,18 +86,12 @@ let generateMap = function(category) {
   let geojson = getGeoJson(category)
   geojson.addTo(map)
 
-  return { element: element, map: map, geojson: geojson };
+  let attribution = L.control.attribution({ position: 'bottomright' });
+
+  return { element: element, map: map, geojson: geojson, attribution: attribution };
 }
 
-let setupMap = function(category, map, geojson, showAttribution) {
-  if (showAttribution) {
-    map.addControl(attributionControl)
-  } else {
-    if ($('.nav-map .leaflet-control-attribution').is(':visible')) {
-      map.removeControl(attributionControl)
-    }
-  }
-
+let setupMap = function(category, map, geojson) {
   if (category) {
     let slug = category.slug,
         parentSlug = category.parentCategory ? category.parentCategory.slug : null;

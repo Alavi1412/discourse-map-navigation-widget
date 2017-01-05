@@ -12,7 +12,7 @@ export default createWidget('nav-map', {
       mapObjs: undefined,
       mapToggle: 'fa-expand',
       expanded: false,
-      showattribution: false,
+      showAttribution: false,
       invalidateSize: true,
     }
   },
@@ -99,6 +99,16 @@ export default createWidget('nav-map', {
   },
 
   toggleAttribution() {
+    const map = this.state.mapObjs.map;
+    const attribution = this.state.mapObjs.attribution;
+
+    if (!this.state.showAttribution) {
+      map.addControl(attribution)
+    } else {
+      if ($('.nav-map .leaflet-control-attribution').is(':visible')) {
+        map.removeControl(attribution)
+      }
+    }
     this.state.showAttribution = !this.state.showAttribution
   }
 })
