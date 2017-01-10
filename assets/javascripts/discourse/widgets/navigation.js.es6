@@ -10,7 +10,7 @@ export default createWidget('navigation', {
     const topic = attrs.topic;
     const user = this.currentUser;
     const category = attrs.category;
-    let isHome = category && category.get('url') === ('/c/' + user.get('home_category'));
+    let isHome = user && category && category.get('url') === ('/c/' + user.get('home_category'));
     let isTopic = Boolean(topic)
 
     let contents = [
@@ -24,7 +24,7 @@ export default createWidget('navigation', {
         isTopic: isTopic
       })
     ]
-    
+
     return contents;
   }
 })
