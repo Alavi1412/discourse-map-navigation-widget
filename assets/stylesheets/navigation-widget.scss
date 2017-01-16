@@ -8,7 +8,7 @@
     flex: 1;
     z-index: 201;
     position: relative;
-    padding-left: 7px;
+    padding-left: 9px;
     margin-left: 7px;
     border: 1px solid dark-light-diff($primary, $secondary, 90%, -65%);
     box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.4);
@@ -16,13 +16,14 @@
       padding-left: 0;
     }
     .badge-wrapper {
-      margin-right: 0;
-      vertical-align: middle;
       span {
         margin-right: 0;
       }
       &.empty {
-        outline: 1px solid #eee;
+        outline: 2px solid #eee;
+        height: 8px;
+        width: 8px;
+        font-size: 10px;
       }
     }
     #category-input {
@@ -31,6 +32,8 @@
       border: none;
       margin: 0;
       height: 20px;
+      padding: 4px 6px 4px 1px;
+      font-size: 14px;
     }
     .nav-category-list {
       width: 100%;

@@ -1,5 +1,4 @@
 import { createWidget } from 'discourse/widgets/widget';
-import { categoryBadgeHTML } from 'discourse/helpers/category-link';
 import Category from 'discourse/models/category';
 import DiscourseURL from 'discourse/lib/url';
 import RawHtml from 'discourse/widgets/raw-html';
@@ -10,12 +9,13 @@ function categoryStripe(color, classes) {
   return "<span class='" + classes + "' " + style + "></span>";
 }
 
-function categoryStripeHTML(category, empty) {
-  var get = Em.get
-  let parentCat = Discourse.Category.findById(get(category, 'parent_category_id'));
+function categoryStripeHTML(category, listVisible) {
+  var get = Em.get;
+  let parentCat = category ? Discourse.Category.findById(get(category, 'parent_category_id')) : false;
   let html = '';
-  let categoryColor = get(category, 'color')
-  let classes = Discourse.SiteSettings.category_style
+  let categoryColor = category ? get(category, 'color') : 'fff';
+  let classes = Discourse.SiteSettings.category_style;
+  let empty = !category || listVisible;
 
   if (empty) {
     categoryColor = 'fff'
@@ -23,10 +23,9 @@ function categoryStripeHTML(category, empty) {
   }
 
   if (parentCat && parentCat !== category) {
-    let parentColor = empty ? '' : get(parentCat, 'color')
+    let parentColor = empty ? 'fff' : get(parentCat, 'color')
     html += categoryStripe(parentColor, "badge-category-parent-bg");
   }
-
   html += categoryStripe(categoryColor, "badge-category-bg");
 
   return "<div class='badge-wrapper " + classes + "'>" + html + "</div>";
@@ -36,7 +35,10 @@ createWidget('category-item', {
   tagName: 'li',
 
   html(attrs) {
-    return [new RawHtml({ html: categoryBadgeHTML(attrs.category, {link: false}) })]
+    return [
+      new RawHtml({ html: categoryStripeHTML(attrs.category) }),
+      attrs.category.name
+    ]
   },
 
   click() {
@@ -95,10 +97,10 @@ export default createWidget('nav-category', {
   buildKey: () => 'nav-category',
 
   defaultState(attrs) {
-    let category = attrs.category || '';
+    let filter = attrs.category ? attrs.category.name : '';
     return {
-      category: category,
-      categories: this.filterCategories(category.name),
+      category: attrs.category,
+      categories: this.filterCategories(filter),
       listVisible: false
     }
   },
@@ -120,9 +122,9 @@ export default createWidget('nav-category', {
 
   getCategoryList() {
     let options = []
-    this.state.categories.forEach((category) => {
+    this.state.categories.forEach((c) => {
       options.push(this.attach('category-item', {
-        category: category
+        category: c
       }))
     })
     return options
