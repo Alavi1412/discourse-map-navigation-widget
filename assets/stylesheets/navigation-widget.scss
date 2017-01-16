@@ -8,18 +8,33 @@
     flex: 1;
     z-index: 201;
     position: relative;
-    padding: 0 10px;
+    padding-left: 7px;
+    margin-left: 7px;
+    border: 1px solid dark-light-diff($primary, $secondary, 90%, -65%);
+    box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.4);
     &.guest {
       padding-left: 0;
     }
-    input {
-      width: 100%;
+    .badge-wrapper {
+      margin-right: 0;
+      vertical-align: middle;
+      span {
+        margin-right: 0;
+      }
+      &.empty {
+        outline: 1px solid #eee;
+      }
+    }
+    #category-input {
+      width: 114px;
+      box-shadow: none;
+      border: none;
       margin: 0;
-      border: 1px solid dark-light-diff($primary, $secondary, 90%, -65%);
-      box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.4);
+      height: 20px;
     }
     .nav-category-list {
-      width: 95%;
+      width: 100%;
+      left: 0;
       list-style: none;
       margin: 0;
       background-color: white;
@@ -29,6 +44,9 @@
         display: block;
         padding: 5px 8px;
         cursor: pointer;
+        .badge-category {
+          margin-left: 5px;
+        }
         &:hover {
           background-color: $tertiary;
           color: white;

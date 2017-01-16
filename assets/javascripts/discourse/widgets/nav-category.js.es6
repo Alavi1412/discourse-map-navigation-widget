@@ -1,13 +1,42 @@
 import { createWidget } from 'discourse/widgets/widget';
+import { categoryBadgeHTML } from 'discourse/helpers/category-link';
 import Category from 'discourse/models/category';
 import DiscourseURL from 'discourse/lib/url';
+import RawHtml from 'discourse/widgets/raw-html';
 import { h } from 'virtual-dom';
+
+function categoryStripe(color, classes) {
+  var style = color ? "style='background-color: #" + color + ";'" : "";
+  return "<span class='" + classes + "' " + style + "></span>";
+}
+
+function categoryStripeHTML(category, empty) {
+  var get = Em.get
+  let parentCat = Discourse.Category.findById(get(category, 'parent_category_id'));
+  let html = '';
+  let categoryColor = get(category, 'color')
+  let classes = Discourse.SiteSettings.category_style
+
+  if (empty) {
+    categoryColor = 'fff'
+    classes += ' empty'
+  }
+
+  if (parentCat && parentCat !== category) {
+    let parentColor = empty ? '' : get(parentCat, 'color')
+    html += categoryStripe(parentColor, "badge-category-parent-bg");
+  }
+
+  html += categoryStripe(categoryColor, "badge-category-bg");
+
+  return "<div class='badge-wrapper " + classes + "'>" + html + "</div>";
+}
 
 createWidget('category-item', {
   tagName: 'li',
 
   html(attrs) {
-    return attrs.category.name
+    return [new RawHtml({ html: categoryBadgeHTML(attrs.category, {link: false}) })]
   },
 
   click() {
@@ -50,14 +79,19 @@ createWidget('category-input', {
 
   keyUp(e) {
     if (e.which === 13) {
-      return this.sendWidgetAction('goToCategory', this.state.category);
+      let category = this.state.category;
+      if (this.attrs.topResult) {
+        category = this.attrs.topResult
+      }
+      this.sendWidgetAction('toggleList', false)
+      return this.sendWidgetAction('goToCategory', category);
     }
     this.sendWidgetAction('inputChanged', e.target.value);
   }
 })
 
 export default createWidget('nav-category', {
-  tagName: () => 'div',
+  tagName: 'div',
   buildKey: () => 'nav-category',
 
   defaultState(attrs) {
@@ -95,9 +129,13 @@ export default createWidget('nav-category', {
   },
 
   html(attrs, state) {
-    let contents = [this.attach('category-input', {
-      category: state.category || {}
-    })]
+    let contents = [
+      new RawHtml({ html: categoryStripeHTML(state.category, state.listVisible) }),
+      this.attach('category-input', {
+        category: state.category || {},
+        topResult: state.categories[0] || false
+      })
+    ]
     if (state.listVisible) {
       const list = this.getCategoryList();
       contents.push(
