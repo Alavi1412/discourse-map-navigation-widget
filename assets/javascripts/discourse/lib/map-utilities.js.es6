@@ -59,7 +59,7 @@ let getGeoJson = function(category) {
   const categories = Discourse.Category.list()
   for (let i = 0; i < categories.length; i++) {
     if (categories[i].has_geojson) {
-      geojson.addData(categories[i].geojson)
+      geojson.addData(JSON.parse(categories[i].geojson))
     }
   }
 

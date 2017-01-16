@@ -1,0 +1,6 @@
+<div class="geojson-upload-btn">
+  <input id="js-file-input" type="file" style="display:none;" accept={{accept}}>
+  {{d-button class="fileSelect" action="selectFile" class="" icon="upload" label="upload_selector.select_file"}}
+  {{conditional-loading-spinner condition=loading size="small"}}
+</div>
+<span class='geojson-filename'>{{fileName}}</span>

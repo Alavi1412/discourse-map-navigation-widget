@@ -9,7 +9,7 @@ register_asset 'lib/leaflet/leaflet.js'
 
 after_initialize do
   Category.register_custom_field_type('has_geojson', :boolean)
-  Category.register_custom_field_type('geojson', :json)
+  Category.register_custom_field_type('geojson', :string)
   User.register_custom_field_type("home_category", :string)
   User.preloaded_custom_fields << "home_category" if User.respond_to? :preloaded_custom_fields
 

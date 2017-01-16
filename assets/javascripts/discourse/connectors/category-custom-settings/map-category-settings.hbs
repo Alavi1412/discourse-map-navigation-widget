@@ -1,13 +1,8 @@
-<section class='field'>
+<section class="field">
+  <label>{{i18n 'category.geojson'}}</label>
+  {{geojson-uploader value=category.custom_fields.geojson extension=".geojson"}}
   <label>
     {{input type="checkbox" checked=category.custom_fields.has_geojson}}
     {{i18n 'category.has_geojson'}}
-  </label>
-</section>
-
-<section class="field">
-  <label>
-    {{json-file-uploader value=category.custom_fields.geojson extension=".geojson"}}
-    {{i18n 'category.geojson'}}
   </label>
 </section>
