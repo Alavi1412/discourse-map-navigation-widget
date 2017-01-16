@@ -27,10 +27,7 @@ export default createWidget('nav-header', {
 
     return h('div.nav-header', [
       this.homeBtn(isHome),
-      this.attach('nav-category',
-        { className: catClasses},
-        { category: category }
-      )
+      this.attach('nav-category', { category: category, className: catClasses})
     ])
   },
 
