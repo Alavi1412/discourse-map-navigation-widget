@@ -1,3 +1,5 @@
+import DiscourseURL from 'discourse/lib/url';
+
 let mapStyle = function(feature, highlight) {
   return {
     fillColor: feature.parent ? "#ff7800" : "#0088cc",
