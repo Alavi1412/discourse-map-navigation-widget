@@ -49,6 +49,7 @@ createWidget('category-item', {
 createWidget('category-input', {
   tagName: 'input',
   buildId: () => 'category-input',
+  buildKey: () => 'category-input',
 
   defaultState(attrs) {
     return {
